@@ -1,20 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useColorMode } from 'native-base';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import useTheme from './src/hooks/useTheme';
+import NativeBase from './src/libs/NativeBase';
+import ActionSheetShowcase from './src/screens/showcase/ActionSheet';
 
 export default function App() {
+  const { theme, toggleTheme } = useTheme();
+  const getInvertedTheme = () => theme === 'dark' ? 'light' : 'dark';
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NativeBase>
+      <SafeAreaView style={styles.container}>
+        <ActionSheetShowcase nextThemeName={getInvertedTheme()} toggleTheme={toggleTheme}  />
+        <StatusBar style={theme ?? 'auto'} />
+      </SafeAreaView>
+    </NativeBase>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // backgroundColor: '#d5d5d5',
+    backgroundColor: '#111111',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
 });
+
+
